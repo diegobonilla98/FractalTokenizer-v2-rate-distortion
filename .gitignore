@@ -16,6 +16,10 @@ htmlcov/
 /checkpoints/
 /outputs/
 /tensorboard/
+/archive/
+
+/benchmark_v2_results.json
+/partition_rd_v2_results.json
 
 # Common model weights and media outputs
 *.pt
