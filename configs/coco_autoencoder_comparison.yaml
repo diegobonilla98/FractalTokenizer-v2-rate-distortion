@@ -1,0 +1,85 @@
+schema_version: 1
+
+dataset:
+  source_root: /mnt/hdd/coco2017
+  staged_root: /dev/shm/coco2017
+  use_staged_root: true
+  image_size: 256
+  train_limit: null
+  validation_limit: null
+
+architecture:
+  channels: 3
+  latent_dim: 256
+  transformer_depth: 6
+  transformer_heads: 8
+  transformer_mlp_ratio: 4.0
+  attention_dropout: 0.0
+  dropout: 0.0
+  refiner_hidden_dim: 128
+  refiner_blocks: 4
+  compile_refiner: true
+
+fractal:
+  input_tile_size: 16
+  output_tile_size: 32
+  encoder_hidden_dim: 128
+  decoder_hidden_dim: 192
+  coordinate_fourier_bands: 8
+  geometry_fourier_bands: 8
+  decoder_token_chunk_size: 16
+  partition_stride: 8
+  partition_backend: quantile
+  bsp_min_size: 1
+  bsp_workers: 12
+  density_temperature: 0.4
+  density_coherence_floor: 0.35
+  density_blur_sigma: 0.0
+  kernel_backend: cuda
+  partition_density_floor_ratio: 0.02
+  region_sampling_ratio: 2
+  detokenizer_postprocess_clamp: false
+  compile_density: true
+  compile_decoder: true
+
+training:
+  output_root: runs/coco_autoencoder_comparison
+  seed: 42
+  epochs: 10
+  variants:
+    - name: grid_128
+      family: grid
+      tokens: 128
+    - name: fractal_ab_128
+      family: fractal
+      tokens: 128
+  micro_batch_size: 32
+  validation_batch_size: 48
+  gradient_accumulation_steps: 2
+  workers: 16
+  prefetch_factor: 4
+  learning_rate: 0.0003
+  minimum_learning_rate: 0.000003
+  warmup_epochs: 1
+  weight_decay: 0.05
+  gradient_clip_norm: 1.0
+  use_bfloat16: true
+  resume: true
+  sample_every: 1
+  sample_count: 8
+  telegram_enabled: true
+  telegram_poll_updates: true
+  telegram_plot_every: 2
+  stagnation_patience: 4
+  underfit_epoch: 5
+  underfit_psnr: 20.0
+  overfit_gap_db: 3.0
+
+loss:
+  charbonnier_weight: 1.0
+  mse_weight: 0.5
+  multiscale_weight: 0.5
+  gradient_weight: 0.25
+  seam_weight: 0.1
+  base_weight: 0.25
+  charbonnier_epsilon: 0.001

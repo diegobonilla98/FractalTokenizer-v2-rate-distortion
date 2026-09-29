@@ -1,0 +1,75 @@
+schema_version: 1
+
+dataset:
+  source_image_root: /mnt/hdd/supervisely_person_clean_2667_img/images
+  staged_image_root: /dev/shm/supervisely_person_clean_2667_img/images
+  image_size: 256
+  split_seed: 42
+  train_fraction: 0.8
+  validation_fraction: 0.1
+
+density_profile:
+  name: legacy_20260816
+  temperature: 1.0
+  coherence_floor: 0.35
+  blur_sigma: 0.0
+  evidence: best ImageNet100 fractal result, 75.02 percent top-1
+
+variants:
+  fractal_bsp_variable_64:
+    kind: fractal
+    partition_backend: bsp
+    target_average_tokens: 64
+    mass_per_token: 12.703807733011455
+    max_tokens: 128
+    expected_content_tokens: 63.0625
+    expected_autoregressive_events: 125.125
+  standard_patch16_256:
+    kind: standard
+    partition_backend: quantile
+    token_grid: [16, 16]
+    target_tokens: 256
+    expected_content_tokens: 256
+    expected_autoregressive_events: 256
+
+tokenizer:
+  latent_dim: 192
+  tile_size: 8
+  basis_size: 4
+  partition_stride: 8
+  codebook_size: 2048
+  num_quantizers: 1
+  continuous_epochs: 30
+  vq_epochs: 20
+  batch_size: 32
+  validation_batch_size: 32
+  workers: 12
+  learning_rate: 0.0002
+  minimum_learning_rate: 0.000002
+  weight_decay: 0.05
+  gradient_clip_norm: 1.0
+  sample_every: 5
+
+prior:
+  epochs: 80
+  cache_batch_size: 16
+  shards_per_batch: 1
+  workers: 8
+  model_dim: 384
+  depth: 8
+  heads: 6
+  mlp_ratio: 4.0
+  dropout: 0.0
+  learning_rate: 0.0003
+  minimum_learning_rate: 0.000003
+  weight_decay: 0.05
+  gradient_clip_norm: 1.0
+
+run:
+  output_root: runs/supervisely_generation/comparison
+  seed: 42
+  use_bfloat16: true
+  telegram_enabled: true
+  telegram_poll_updates: true
+  resume: true
+  stages: [continuous, vq, cache, prior, sample]

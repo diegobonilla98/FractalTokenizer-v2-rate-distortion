@@ -1,0 +1,71 @@
+schema_version: 1
+active_density_profile: legacy_20260816
+
+density_profiles:
+  legacy_20260816:
+    temperature: 1.0
+    coherence_floor: 0.35
+    blur_sigma: 0.0
+
+training_defaults:
+  seeds: [42]
+  source_dataset_root: /mnt/hdd/ImageNet100
+  staged_dataset_root: /dev/shm/ImageNet100
+  stage_to_shared_memory: true
+  image_size: 256
+  num_classes: 100
+  epochs: 45
+  micro_batch_size: 64
+  gradient_accumulation_steps: 8
+  workers: 16
+  prefetch_factor: 4
+  model_dim: 384
+  depth: 8
+  num_heads: 6
+  mlp_ratio: 4.0
+  dropout: 0.0
+  attention_dropout: 0.0
+  maximum_tokens: 128
+  v3_capacity_bits_64: 11154.006347656252
+  v3_capacity_bits_96: 6857.214111328126
+  partition_stride: 8
+  tile_size: 8
+  basis_size: 4
+  learning_rate: 0.0005
+  minimum_learning_rate: 0.000001
+  weight_decay: 0.05
+  warmup_epochs: 5
+  label_smoothing: 0.1
+  mixup_alpha: 0.8
+  gradient_clip_norm: 1.0
+  random_erase_probability: 0.25
+  use_bfloat16: true
+  compile_model: false
+  kernel_backend: cuda
+  partition_density_floor_ratio: 0.02
+  region_sampling_ratio: 2
+  compile_density: true
+  resume: true
+  telegram_enabled: true
+  telegram_poll_updates: true
+  telegram_plot_every: 3
+  minimum_epochs: 30
+  early_stopping_patience: 8
+  underfit_epoch: 15
+  underfit_train_top1: 25.0
+  overfit_gap: 15.0
+  collapse_epoch: 5
+  collapse_train_top1: 2.0
+  stagnation_patience: 8
+
+runs:
+  mean64:
+    variants: [fractal_v3_predictive_64, fractal_analytic_64]
+    token_count: 64
+    output_root: /mnt/hdd/fractaltokenizer_v3_clean/imagenet100_classification/mean64
+    density_profile: legacy_20260816
+  mean96:
+    variants: [fractal_v3_predictive_96, fractal_analytic_96]
+    token_count: 96
+    output_root: /mnt/hdd/fractaltokenizer_v3_clean/imagenet100_classification/mean96
+    density_profile: legacy_20260816

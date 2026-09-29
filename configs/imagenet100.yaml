@@ -1,0 +1,84 @@
+schema_version: 1
+active_density_profile: ab_preferred_20260817
+
+density_profiles:
+  legacy_20260816:
+    temperature: 1.0
+    coherence_floor: 0.35
+    blur_sigma: 0.0
+    provenance: original fractal_128_seed42 training
+  ab_preferred_20260817:
+    temperature: 0.4
+    coherence_floor: 0.35
+    blur_sigma: 0.0
+    provenance: 100 blinded COCO comparisons
+    evidence:
+      temperature:
+        wins: 58
+        exposures: 67
+        preference_score: 0.8656716418
+      coherence_floor:
+        wins: 7
+        exposures: 8
+        preference_score: 0.875
+      blur_sigma_winning_range: [0.0, 0.75]
+      selected_blur_reason: lowest-cost value in winning range
+
+training_defaults:
+  seeds: [42]
+  source_dataset_root: /mnt/hdd/ImageNet100
+  staged_dataset_root: /dev/shm/ImageNet100
+  stage_to_shared_memory: true
+  image_size: 256
+  num_classes: 100
+  epochs: 100
+  micro_batch_size: 64
+  gradient_accumulation_steps: 8
+  workers: 16
+  prefetch_factor: 4
+  model_dim: 384
+  depth: 8
+  num_heads: 6
+  mlp_ratio: 4.0
+  dropout: 0.0
+  attention_dropout: 0.0
+  token_count: 128
+  partition_stride: 8
+  tile_size: 8
+  basis_size: 4
+  learning_rate: 0.0005
+  minimum_learning_rate: 0.000001
+  weight_decay: 0.05
+  warmup_epochs: 5
+  label_smoothing: 0.1
+  mixup_alpha: 0.8
+  gradient_clip_norm: 1.0
+  random_erase_probability: 0.25
+  use_bfloat16: true
+  compile_model: true
+  kernel_backend: cuda
+  partition_density_floor_ratio: 0.02
+  region_sampling_ratio: 2
+  compile_density: true
+  resume: true
+  telegram_enabled: true
+  telegram_poll_updates: true
+  telegram_plot_every: 5
+  underfit_epoch: 20
+  underfit_train_top1: 30.0
+  overfit_gap: 15.0
+  collapse_epoch: 5
+  collapse_train_top1: 2.0
+  stagnation_patience: 15
+
+runs:
+  current_vit_patch16_256:
+    variants: [vit_patch16_256]
+    output_root: runs/imagenet100_comparison
+    density_profile: ab_preferred_20260817
+    resume: true
+  fractal_ab_preferred_rerun:
+    variants: [fractal_128]
+    output_root: runs/imagenet100_fractal_ab_preferred
+    density_profile: ab_preferred_20260817
+    resume: true

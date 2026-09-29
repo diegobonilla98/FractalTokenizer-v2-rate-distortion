@@ -1,0 +1,67 @@
+schema_version: 1
+active_density_profile: unused
+
+density_profiles:
+  unused:
+    temperature: 1.0
+    coherence_floor: 0.35
+    blur_sigma: 0.0
+
+training_defaults:
+  seeds: [42]
+  source_dataset_root: /mnt/hdd/ImageNet100
+  staged_dataset_root: /dev/shm/ImageNet100
+  stage_to_shared_memory: true
+  image_size: 256
+  num_classes: 100
+  epochs: 45
+  micro_batch_size: 64
+  gradient_accumulation_steps: 8
+  workers: 16
+  prefetch_factor: 4
+  model_dim: 384
+  depth: 8
+  num_heads: 6
+  mlp_ratio: 4.0
+  dropout: 0.1
+  attention_dropout: 0.0
+  token_count: 96
+  maximum_tokens: 160
+  universal_mass_per_token: 9926.331293741861
+  mass_calibration_images: 2048
+  mass_calibration_target_tokens: 96.0
+  mass_validation_images: 5000
+  partition_stride: 8
+  tile_size: 8
+  basis_size: 4
+  learning_rate: 0.0005
+  minimum_learning_rate: 0.000001
+  weight_decay: 0.05
+  warmup_epochs: 5
+  label_smoothing: 0.1
+  mixup_alpha: 0.0
+  gradient_clip_norm: 1.0
+  random_erase_probability: 0.0
+  use_bfloat16: true
+  compile_model: false
+  kernel_backend: cuda
+  compile_density: false
+  resume: true
+  telegram_enabled: true
+  telegram_poll_updates: true
+  telegram_plot_every: 3
+  minimum_epochs: 30
+  early_stopping_patience: 8
+  underfit_epoch: 15
+  underfit_train_top1: 25.0
+  overfit_gap: 15.0
+  collapse_epoch: 5
+  collapse_train_top1: 2.0
+  stagnation_patience: 8
+
+runs:
+  overnight:
+    variants: [hilbert_uniform_96, hilbert_universal_96, vit_rect_128]
+    output_root: /mnt/hdd/fractaltokenizer_constant_information/imagenet100_overnight
+    density_profile: unused
+    resume: true

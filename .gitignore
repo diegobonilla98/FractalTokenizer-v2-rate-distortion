@@ -1,0 +1,28 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+.coverage
+htmlcov/
+
+# Local training inputs and generated artifacts
+/data/
+/runs/
+/logs/
+/checkpoints/
+/outputs/
+/tensorboard/
+
+# Common model weights and media outputs
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.onnx
+*.engine
+*.mp4
+*.mov

@@ -1,0 +1,32 @@
+schema_version: 1
+seed: 5113
+output_root: /mnt/hdd/fractaltokenizer_constant_information/universal_codelength_gate_smoke
+dataset:
+  imagenet100_calibration: /mnt/hdd/ImageNet100/train
+  imagenet100_evaluation: /mnt/hdd/ImageNet100/val
+  coco_calibration: /mnt/hdd/coco2017/train2017
+  coco_evaluation: /mnt/hdd/coco2017/val2017
+  calibration_images_per_source: 2
+  evaluation_images_per_source: 2
+image:
+  size: 256
+  partition_stride: 8
+evaluation:
+  batch_size: 2
+  num_workers: 2
+  fixed_token_budgets: [16, 32]
+  variable_target_average_tokens: 24
+  maximum_tokens: 64
+  visual_images: 2
+  compute_ssim: false
+universal_coder:
+  alpha: 0.5
+  scan_directions: 4
+gate:
+  maximum_information_mass_cv: 0.50
+  minimum_tokens_within_20_percent: 0.40
+  minimum_psnr_gain_over_uniform_db: -10.0
+  maximum_black_image_tokens: 8
+telegram:
+  enabled: false
+  poll_updates: false

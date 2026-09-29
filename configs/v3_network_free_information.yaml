@@ -1,0 +1,30 @@
+version: v3_network_free_information_1
+density:
+  estimator: four_direction_jpeg_ls_cauchy_excess_bits
+  partition_stride: 8
+  residual_scale: 0.00392156862745098
+  scan_directions: 4
+partition:
+  algorithm: variable_rate_rectangular_equal_mass_quantiles
+  maximum_tokens: 128
+  density_floor_ratio: 0.0
+  uniform_when_saturated: true
+  stationarity_cv_threshold: 0.1
+calibration:
+  dataset: ImageNet100_train
+  labels_used: false
+  images: 2048
+  target_mean_tokens:
+    - 64
+    - 96
+  calibrated_profiles:
+    mean_64:
+      capacity_bits: 11154.006347656252
+    mean_96:
+      capacity_bits: 6857.214111328126
+  audit_artifact: /mnt/hdd/fractaltokenizer_v3_clean/audit/audit.json
+acceptance:
+  constant_image_tokens: 1
+  gaussian_noise_tokens: 128
+  gaussian_partition: exact_regular_grid
+  learned_parameters: 0
